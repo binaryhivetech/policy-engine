@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("maven-publish")
 }
 
 group = "org.binaryhive"
@@ -23,7 +24,6 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.+")
     implementation("com.fasterxml.jackson.module:jackson-module-afterburner:2.+")
 
-
     testCompileOnly("org.projectlombok:lombok:1.18.34")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.34")
 
@@ -34,7 +34,6 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-core:2.24.3")
     implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.24.3")
 
-
     testImplementation("org.mockito:mockito-core:5.+")
     testImplementation("org.mockito:mockito-junit-jupiter:5.+")
 
@@ -44,4 +43,56 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+// Generate sources JAR
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/binaryhivetech/policyengine")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR") ?: project.findProperty("gpr.user") as String?
+                password = System.getenv("GITHUB_TOKEN") ?: project.findProperty("gpr.key") as String?
+            }
+        }
+    }
+    publications {
+        register<MavenPublication>("gpr") {
+            from(components["java"])
+
+            // Customize POM
+            pom {
+                name.set("PolicyEngine")
+                description.set("A policy engine for access control and authorization")
+                url.set("https://github.com/binaryhivetech/policyengine")
+
+                licenses {
+                    license {
+                        name.set("The Apache License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+
+                developers {
+                    developer {
+                        id.set("binaryhivetech")
+                        name.set("Binary Hive Technology")
+                        email.set("dev@binaryhive.org")
+                    }
+                }
+
+                scm {
+                    connection.set("scm:git:git://github.com/binaryhivetech/policyengine.git")
+                    developerConnection.set("scm:git:ssh://github.com/binaryhivetech/policyengine.git")
+                    url.set("https://github.com/binaryhivetech/policyengine")
+                }
+            }
+        }
+    }
 }
