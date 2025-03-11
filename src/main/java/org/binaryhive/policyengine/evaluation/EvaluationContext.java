@@ -11,8 +11,8 @@ import java.util.Map;
 @Getter
 public abstract class EvaluationContext {
 
-  private final String action;
-  private final Map<String, String> context;
+  protected final String action;
+  protected final Map<String, Object> context;
 
   abstract List<Policy> policies();
 }
