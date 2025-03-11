@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.binaryhive"
-version = "2025.1.0"
+version = "2025.1.1"
 
 configurations {
     compileOnly {
@@ -20,9 +20,9 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
 
-    implementation("com.fasterxml.jackson.core:jackson-core:2.+")
-    implementation("com.fasterxml.jackson.core:jackson-annotations:2.+")
-    implementation("com.fasterxml.jackson.module:jackson-module-afterburner:2.+")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.16.1")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.16.1")
+    implementation("com.fasterxml.jackson.module:jackson-module-afterburner:2.16.1")
 
     testCompileOnly("org.projectlombok:lombok:1.18.34")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.34")
@@ -55,7 +55,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/binaryhivetech/policyengine")
+            url = uri("https://maven.pkg.github.com/binaryhivetech/policy-engine")
             credentials {
                 username = System.getenv("GITHUB_ACTOR") ?: project.findProperty("gpr.user") as String?
                 password = System.getenv("GITHUB_TOKEN") ?: project.findProperty("gpr.key") as String?
@@ -70,7 +70,7 @@ publishing {
             pom {
                 name.set("PolicyEngine")
                 description.set("A policy engine for access control and authorization")
-                url.set("https://github.com/binaryhivetech/policyengine")
+                url.set("https://github.com/binaryhivetech/policy-engine")
 
                 licenses {
                     license {
@@ -88,9 +88,9 @@ publishing {
                 }
 
                 scm {
-                    connection.set("scm:git:git://github.com/binaryhivetech/policyengine.git")
-                    developerConnection.set("scm:git:ssh://github.com/binaryhivetech/policyengine.git")
-                    url.set("https://github.com/binaryhivetech/policyengine")
+                    connection.set("scm:git:git://github.com/binaryhivetech/policy-engine.git")
+                    developerConnection.set("scm:git:ssh://github.com/binaryhivetech/policy-engine.git")
+                    url.set("https://github.com/binaryhivetech/policy-engine")
                 }
             }
         }
