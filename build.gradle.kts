@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.binaryhive"
-version = "2025.1.2"
+version = "2025.1.2.1"
 
 configurations {
     compileOnly {
